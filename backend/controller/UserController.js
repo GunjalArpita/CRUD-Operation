@@ -2,27 +2,33 @@ import UserModels from "../models/User.js";
 
 const Createuser = async (req, res) => {
     try {
-        const { name, fathername, email, phone } = req.body;
-        const NewUser = new UserModels({ name, fathername, email, phone });
+        const { name, role, email, phone } = req.body; // Ensure all required fields are extracted
 
+        // Validate required fields
+        if (!name || !role || !email || !phone) {
+            return res.status(400).json({ success: false, message: "All fields are required" });
+        }
+
+        const NewUser = new UserModels({ name, role, email, phone });
         await NewUser.save();
-        res.status(200).json({ success: true, message: 'user created successfully', NewUser });
+
+        res.status(200).json({ success: true, message: 'User created successfully', user: NewUser });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ success: false, message: 'internal server error' });
+        console.error("Error in Createuser:", error); // Log the error for debugging
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
 
 // Read API
 const GetUser = async (req, res) => {
     try {
-        const user = await UserModels.find();
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'user not found' });
+        const users = await UserModels.find(); // Renamed variable to 'users' for clarity
+        if (users.length === 0) { // Check for empty array instead of null
+            return res.status(404).json({ success: false, message: 'no users found' });
         }
-        res.status(200).json({ success: true, users: user });
+        res.status(200).json({ success: true, users }); // Return the users array
     } catch (error) {
-        console.log(error);
+        console.error("Error in GetUser:", error); // Log the error
         return res.status(500).json({ success: false, message: 'internal server error' });
     }
 };

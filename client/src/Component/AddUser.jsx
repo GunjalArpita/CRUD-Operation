@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function AddUser({ handleAddUser }) {
-
     const [value, setValue] = useState({
         name: '',
-        fathername: '',
+        role: '',
         email: '',
         phone: ''
     });
@@ -22,56 +22,56 @@ export default function AddUser({ handleAddUser }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const adduser = await axios.post('http://localhost:4000/api/create', value);
-            const response = adduser.data;
-            if (response.success && response.user) {
-                toast.success(response.message);
-                CloseRef.current.click();
-                handleAddUser(response.user); // Update state in parent component
+            const response = await axios.post('http://localhost:4000/api/create', value);
+            if (response.data.success) {
+                toast.success(response.data.message);
+                CloseRef.current.click(); // Close the modal
+                handleAddUser(response.data.user); // Update parent state with new user
+                setValue({ name: '', role: '', email: '', phone: '' }); // Reset form
+            } else {
+                toast.error(response.data.message);
             }
-            console.log(response);
         } catch (error) {
-            console.log(error);
+            console.error("Error adding user:", error);
+            toast.error("Failed to add user. Please try again.");
         }
     };
 
     return (
-        <>
-            <div className='modal fade' id='addEmployeeModal'>
-                <div className='modal-dialog'>
-                    <div className='modal-content'>
-                        <form onSubmit={handleSubmit}>
-                            <div className='modal-header'>
-                                <h4 className='modal-title'>Add Employee</h4>
-                                <button type='button' className='btn-close' data-bs-dismiss='modal' aria-hidden='true' ref={CloseRef}>&times;</button>
+        <div className='modal fade' id='addEmployeeModal'>
+            <div className='modal-dialog'>
+                <div className='modal-content'>
+                    <form onSubmit={handleSubmit}>
+                        <div className='modal-header bg-success text-white'>
+                            <h4 className='modal-title'>Add Employee</h4>
+                            <button type='button' className='btn-close' data-bs-dismiss='modal' aria-hidden='true' ref={CloseRef}></button>
+                        </div>
+                        <div className='modal-body'>
+                            <div className='form-group mb-3'>
+                                <label>Name</label>
+                                <input type='text' value={value.name} name='name' onChange={handleChange} className='form-control' required />
                             </div>
-                            <div className='modal-body'>
-                                <div className='form-group'>
-                                    <label>Name</label>
-                                    <input type='text' value={value.name} name='name' onChange={handleChange} className='form-control' required ></input>
-                                </div>
-                                <div className='form-group'>
-                                    <label>Father</label>
-                                    <input type='text' value={value.fathername} name='fathername' onChange={handleChange} className='form-control' required ></input>
-                                </div>
-                                <div className='form-group'>
-                                    <label>Email</label>
-                                    <input type='email' value={value.email} name='email' onChange={handleChange} className='form-control' required ></input>
-                                </div>
-                                <div className='form-group'>
-                                    <label>Phone</label>
-                                    <input type='text' value={value.phone} name='phone' onChange={handleChange} className='form-control' required ></input>
-                                </div>
+                            <div className='form-group mb-3'>
+                                <label>Role</label>
+                                <input type='text' value={value.role} name='role' onChange={handleChange} className='form-control' required />
                             </div>
-                            <div className='modal-footer'>
-                                <input type='button' className='btn btn-default' data-bs-dismiss='modal' value="Cancel"></input>
-                                <input type='submit' className='btn btn-primary' value="Add" data-bs-dismiss='modal'></input>
+                            <div className='form-group mb-3'>
+                                <label>Email</label>
+                                <input type='email' value={value.email} name='email' onChange={handleChange} className='form-control' required />
                             </div>
-                        </form>
-                    </div>
+                            <div className='form-group mb-3'>
+                                <label>Phone</label>
+                                <input type='text' value={value.phone} name='phone' onChange={handleChange} className='form-control' required />
+                            </div>
+                        </div>
+                        <div className='modal-footer'>
+                            <button type='button' className='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+                            <button type='submit' className='btn btn-success'>Add</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
