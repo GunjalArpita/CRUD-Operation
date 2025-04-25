@@ -10,6 +10,7 @@ export default function App() {
         <Router>
             <Toaster />
             <Routes>
+                <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect default route to AdminLogin */}
                 <Route path="/login" element={<AdminLogin />} />
                 <Route
                     path="/dashboard"
@@ -19,7 +20,7 @@ export default function App() {
                         </PrivateRoute>
                     }
                 />
-                <Route path="*" element={<Navigate to="/login" />} /> {/* Redirect to login by default */}
+                <Route path="*" element={<Navigate to="/login" />} /> {/* Redirect unknown routes to AdminLogin */}
             </Routes>
         </Router>
     );

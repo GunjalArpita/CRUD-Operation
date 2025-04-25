@@ -1,0 +1,157 @@
+.dashboard-page {
+    min-height: 100vh; /* Ensure the background covers the full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: linear-gradient(to right, #2c3e50, #4ca1af); /* Updated to royal blue shades */
+    padding: 20px;
+}
+
+h2 {
+    font-size: 3rem; /* Increased font size for the dashboard title */
+    font-weight: bold;
+    color: #ffffff; /* White text for contrast */
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #1a237e, #3949ab); /* Updated to dark royal blue shades */
+    padding: 15px 20px; /* Add padding for spacing */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for a modern look */
+    text-align: center; /* Center-align the text */
+    border: 2px solid #283593; /* Add a border with a medium royal blue color */
+    max-width: 1200px; /* Align the title width with the table */
+    width: 100%; /* Ensure it spans the full width */
+    margin: 0 auto; /* Center the title horizontally */
+}
+
+.top-bar {
+    width: 100%;
+    max-width: 1200px; /* Align with the table width */
+    margin-bottom: 20px;
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between the button and search bar */
+    align-items: center; /* Vertically align items */
+    margin: 0 auto; /* Center the top bar horizontally */
+}
+
+.add-btn {
+    width: 200px; /* Set width for the Add Employee button */
+    height: 50px; /* Set height for the Add Employee button */
+    font-size: 1rem;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 400px; /* Reduced the width of the search bar */
+    display: flex;
+    justify-content: flex-end; /* Align the search bar to the right */
+}
+
+.search-input {
+    height: 50px; /* Set height for the search bar */
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%; /* Ensure the search bar occupies the remaining space */
+}
+
+.table-wrapper {
+    width: 100%; /* Ensure the table occupies the full width */
+    max-width: 1200px; /* Limit the maximum width */
+    background: #ffffff; /* White background for the table */
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Softer shadow for a modern look */
+    min-height: 100%; /* Ensure the wrapper's height matches the table's height */
+    margin: 0 auto; /* Center the table horizontally */
+}
+
+.table {
+    width: 100%; /* Ensure the table occupies the full width */
+    border-collapse: collapse; /* Remove gaps between table cells */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow for the table */
+}
+
+.table thead {
+    background: #004d40; /* Changed to dark teal for column headers */
+    color: #ffffff; /* White text for contrast */
+    text-transform: uppercase; /* Make header text uppercase */
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+}
+
+.table thead th {
+    padding: 15px; /* Add padding for better readability */
+    text-align: left;
+    border-bottom: 2px solid #00332e; /* Add a darker teal border for separation */
+}
+
+.table tbody tr {
+    background: #f3e5f5; /* Light purple for table rows */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.table tbody tr:nth-child(even) {
+    background: #e9ecef; /* Light gray for alternate rows */
+}
+
+.table tbody tr:hover {
+    background: #d1c4e9; /* Slightly darker purple on hover */
+}
+
+.table tbody td {
+    padding: 15px; /* Add padding for better readability */
+    border-bottom: 1px solid #dee2e6; /* Add subtle border between rows */
+    font-size: 0.95rem;
+    color: #495057; /* Neutral gray for text */
+}
+
+.table tbody td:last-child {
+    text-align: center; /* Center-align action buttons */
+}
+
+.btn {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+}
+
+.btn:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}

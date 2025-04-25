@@ -5,6 +5,7 @@ import UpdatedUser from '../Component/UpdatedUser';
 import DeleteUser from '../Component/DeleteUser';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import './UserTable.css'; // Import the CSS file for styling
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
@@ -13,13 +14,13 @@ export default function UserTable() {
     const [deleteId, setDeleteId] = useState(null);
     const [value, setValue] = useState({
         name: "",
-        fathername: "",
+        role: "",
         email: "",
         phone: ""
     });
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true); // Loading state
-    const [error, setError] = useState(null); // Error state
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function FetchData() {
@@ -36,7 +37,7 @@ export default function UserTable() {
                 console.error("Error fetching data:", error);
                 setError('Failed to fetch data. Please check the backend server.');
             } finally {
-                setLoading(false); // Stop loading after fetch
+                setLoading(false);
             }
         }
 
@@ -82,30 +83,39 @@ export default function UserTable() {
             const response = updateUser.data;
             if (response.success) {
                 toast.success(response.message);
-                setData(prevData => prevData.map(user => user._id === updateid ? { ...user, ...value } : user));
+
+                // Fetch updated data from the server to ensure consistency
+                const fetchUser = await axios.get('http://localhost:4000/api/get');
+                const updatedResponse = fetchUser.data;
+                if (updatedResponse.success && Array.isArray(updatedResponse.users)) {
+                    setData(updatedResponse.users); // Update the state with the latest data
+                }
             }
         } catch (error) {
             console.error("Error updating user:", error);
+            toast.error("Failed to update user. Please try again.");
         }
     };
 
     const handleAddUser = (newUser) => {
-        setData(prevData => [...prevData, newUser]); // Dynamically update the table
+        setData(prevData => [...prevData, newUser]);
     };
 
     return (
-        <div className="container mt-5">
-            <h2 className="text-center mb-4">Employee Management</h2>
-            {loading ? (
-                <p>Loading...</p> // Display loading message
-            ) : error ? (
-                <p className="text-danger text-center">{error}</p> // Display error message
-            ) : (
-                <Table UpdatedUser={handleUpdatedUser} DeleteUser={handleDeleteUser} data={data}></Table>
-            )}
-            <AddUser handleAddUser={handleAddUser}></AddUser>
-            <UpdatedUser value={value} handleChange={handleChange} handleSubmit={handleSubmit}></UpdatedUser>
-            <DeleteUser handleDelete={handleDelete}></DeleteUser>
+        <div className="dashboard-page">
+            <div className="container mt-5">
+                <h2 className="text-center mb-4 text-white">Employee Management Dashboard</h2>
+                {loading ? (
+                    <p className="text-white text-center">Loading...</p>
+                ) : error ? (
+                    <p className="text-danger text-center">{error}</p>
+                ) : (
+                    <Table UpdatedUser={handleUpdatedUser} DeleteUser={handleDeleteUser} data={data}></Table>
+                )}
+                <AddUser handleAddUser={handleAddUser}></AddUser>
+                <UpdatedUser value={value} handleChange={handleChange} handleSubmit={handleSubmit}></UpdatedUser>
+                <DeleteUser handleDelete={handleDelete}></DeleteUser>
+            </div>
         </div>
     );
 }

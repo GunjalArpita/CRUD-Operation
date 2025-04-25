@@ -1,0 +1,57 @@
+.login-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #0f2027, #6610f2); /* Left: dark blue, Right: dark pink */
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Softer shadow for a modern look */
+}
+
+.card-body {
+    padding: 25px;
+    background: #ffffff; /* White background for contrast */
+    border-radius: 12px;
+}
+
+h2 {
+    color: #343a40; /* Dark gray for text */
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #4caf50; /* Green for a positive and professional look */
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+    transform: scale(1.05); /* Subtle hover effect */
+}
+
+.form-label {
+    color: #495057; /* Neutral gray for labels */
+    font-weight: 500;
+}
+
+input.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+input.form-control:focus {
+    border-color: #4caf50; /* Green border on focus */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Subtle green glow */
+}
